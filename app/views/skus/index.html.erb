@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Skus</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Style</th>
+      <th>Size</th>
+      <th>Price</th>
+      <th>Upc</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @skus.each do |sku| %>
+      <tr>
+        <td><%= sku.style_id %></td>
+        <td><%= sku.size %></td>
+        <td><%= sku.price %></td>
+        <td><%= sku.upc %></td>
+        <td><%= link_to 'Show', sku %></td>
+        <td><%= link_to 'Edit', edit_sku_path(sku) %></td>
+        <td><%= link_to 'Destroy', sku, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sku', new_sku_path %>

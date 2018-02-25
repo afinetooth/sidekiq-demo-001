@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Style:</strong>
+  <%= @sku.style_id %>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @sku.size %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @sku.price %>
+</p>
+
+<p>
+  <strong>Upc:</strong>
+  <%= @sku.upc %>
+</p>
+
+<%= link_to 'Edit', edit_sku_path(@sku) %> |
+<%= link_to 'Back', skus_path %>

@@ -1,0 +1,32 @@
+<%= form_with(model: line, local: true) do |form| %>
+  <% if line.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(line.errors.count, "error") %> prohibited this line from being saved:</h2>
+
+      <ul>
+      <% line.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :order_id %>
+    <%= form.number_field :order_id, id: :line_order_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sku_id %>
+    <%= form.number_field :sku_id, id: :line_sku_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :qty %>
+    <%= form.number_field :qty, id: :line_qty %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
