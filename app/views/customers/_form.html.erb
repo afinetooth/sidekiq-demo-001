@@ -1,0 +1,87 @@
+<%= form_with(model: customer, local: true) do |form| %>
+  <% if customer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(customer.errors.count, "error") %> prohibited this customer from being saved:</h2>
+
+      <ul>
+      <% customer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :customer_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :customer_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address_shipping_street_1 %>
+    <%= form.text_field :address_shipping_street_1, id: :customer_address_shipping_street_1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address_shipping_street_2 %>
+    <%= form.text_field :address_shipping_street_2, id: :customer_address_shipping_street_2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address_shipping_city %>
+    <%= form.text_field :address_shipping_city, id: :customer_address_shipping_city %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address_shipping_state %>
+    <%= form.text_field :address_shipping_state, id: :customer_address_shipping_state %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address_shipping_zip %>
+    <%= form.text_field :address_shipping_zip, id: :customer_address_shipping_zip %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address_shipping_country %>
+    <%= form.text_field :address_shipping_country, id: :customer_address_shipping_country %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address_billing_street_1 %>
+    <%= form.text_field :address_billing_street_1, id: :customer_address_billing_street_1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address_billing_street_2 %>
+    <%= form.text_field :address_billing_street_2, id: :customer_address_billing_street_2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address_billing_city %>
+    <%= form.text_field :address_billing_city, id: :customer_address_billing_city %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address_billing_state %>
+    <%= form.text_field :address_billing_state, id: :customer_address_billing_state %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address_billing_zip %>
+    <%= form.text_field :address_billing_zip, id: :customer_address_billing_zip %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address_billing_country %>
+    <%= form.text_field :address_billing_country, id: :customer_address_billing_country %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

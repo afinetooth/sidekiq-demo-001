@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Customers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Address shipping street 1</th>
+      <th>Address shipping street 2</th>
+      <th>Address shipping city</th>
+      <th>Address shipping state</th>
+      <th>Address shipping zip</th>
+      <th>Address shipping country</th>
+      <th>Address billing street 1</th>
+      <th>Address billing street 2</th>
+      <th>Address billing city</th>
+      <th>Address billing state</th>
+      <th>Address billing zip</th>
+      <th>Address billing country</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @customers.each do |customer| %>
+      <tr>
+        <td><%= customer.name %></td>
+        <td><%= customer.email %></td>
+        <td><%= customer.address_shipping_street_1 %></td>
+        <td><%= customer.address_shipping_street_2 %></td>
+        <td><%= customer.address_shipping_city %></td>
+        <td><%= customer.address_shipping_state %></td>
+        <td><%= customer.address_shipping_zip %></td>
+        <td><%= customer.address_shipping_country %></td>
+        <td><%= customer.address_billing_street_1 %></td>
+        <td><%= customer.address_billing_street_2 %></td>
+        <td><%= customer.address_billing_city %></td>
+        <td><%= customer.address_billing_state %></td>
+        <td><%= customer.address_billing_zip %></td>
+        <td><%= customer.address_billing_country %></td>
+        <td><%= link_to 'Show', customer %></td>
+        <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
+        <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Customer', new_customer_path %>

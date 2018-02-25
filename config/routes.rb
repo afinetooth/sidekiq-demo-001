@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :units
+  resources :customers
   resources :skus
   resources :styles
   resources :lines

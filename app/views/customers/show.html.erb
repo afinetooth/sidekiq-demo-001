@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @customer.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @customer.email %>
+</p>
+
+<p>
+  <strong>Address shipping street 1:</strong>
+  <%= @customer.address_shipping_street_1 %>
+</p>
+
+<p>
+  <strong>Address shipping street 2:</strong>
+  <%= @customer.address_shipping_street_2 %>
+</p>
+
+<p>
+  <strong>Address shipping city:</strong>
+  <%= @customer.address_shipping_city %>
+</p>
+
+<p>
+  <strong>Address shipping state:</strong>
+  <%= @customer.address_shipping_state %>
+</p>
+
+<p>
+  <strong>Address shipping zip:</strong>
+  <%= @customer.address_shipping_zip %>
+</p>
+
+<p>
+  <strong>Address shipping country:</strong>
+  <%= @customer.address_shipping_country %>
+</p>
+
+<p>
+  <strong>Address billing street 1:</strong>
+  <%= @customer.address_billing_street_1 %>
+</p>
+
+<p>
+  <strong>Address billing street 2:</strong>
+  <%= @customer.address_billing_street_2 %>
+</p>
+
+<p>
+  <strong>Address billing city:</strong>
+  <%= @customer.address_billing_city %>
+</p>
+
+<p>
+  <strong>Address billing state:</strong>
+  <%= @customer.address_billing_state %>
+</p>
+
+<p>
+  <strong>Address billing zip:</strong>
+  <%= @customer.address_billing_zip %>
+</p>
+
+<p>
+  <strong>Address billing country:</strong>
+  <%= @customer.address_billing_country %>
+</p>
+
+<%= link_to 'Edit', edit_customer_path(@customer) %> |
+<%= link_to 'Back', customers_path %>

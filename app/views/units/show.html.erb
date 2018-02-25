@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Sku:</strong>
+  <%= @unit.sku_id %>
+</p>
+
+<p>
+  <strong>Warehouse:</strong>
+  <%= @unit.warehouse %>
+</p>
+
+<p>
+  <strong>Bin:</strong>
+  <%= @unit.bin %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @unit.status %>
+</p>
+
+<%= link_to 'Edit', edit_unit_path(@unit) %> |
+<%= link_to 'Back', units_path %>
