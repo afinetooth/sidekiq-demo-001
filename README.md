@@ -166,3 +166,7 @@ __You should see log messages like:__
 
 > 2018-02-26T04:26:47.932233+00:00 app[worker.1]: 4 TID-p9k34 HardJob JID-ccbc6af995c0af9a832b23da INFO: done: 0.005 sec
 >> ##### *^ External worker process finished*
+
+__And you can monitor Sidekiq via its built-in dashboard:__
+
+[https://demo-sidekiq-001.herokuapp.com/sidekiq/](https://demo-sidekiq-001.herokuapp.com/sidekiq/)
