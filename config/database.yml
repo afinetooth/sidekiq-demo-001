@@ -83,3 +83,4 @@ production:
   database: demo-sidekiq-001_production
   username: demo-sidekiq-001
   password: <%= ENV['DEMO-SIDEKIQ-001_DATABASE_PASSWORD'] %>
+  pool: 25
