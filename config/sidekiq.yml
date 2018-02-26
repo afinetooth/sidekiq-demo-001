@@ -1,5 +1,6 @@
 # Configuration file for Sidekiq.
 :concurrency: 5
+:verbose: true
 
 :queues:
   - [critical, 2]
