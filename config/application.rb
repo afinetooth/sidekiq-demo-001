@@ -30,5 +30,8 @@ module DemoSidekiq001
     
     # Use sidekiq as ActiveJob job runner
     config.active_job.queue_adapter = :sidekiq
+    
+    # Send async mailer jobs to the 'default' queue
+    config.action_mailer.deliver_later_queue_name = 'default'
   end
 end
