@@ -1,8 +1,8 @@
-# README for v0.1
+# README for v0.2
 
 This app demonstrates using Sidekiq as the job runner for ActiveJob
 
-### App description:
+## App description:
 
 * Rails 5.1.5
 * Ruby 2.5.0
@@ -10,7 +10,7 @@ This app demonstrates using Sidekiq as the job runner for ActiveJob
 
 ---
 
-### Dependencies:
+## Dependencies:
 
 To run this app in development, you'll need:
 
@@ -20,7 +20,7 @@ To run this app in development, you'll need:
 
 ---
 
-### Prepare to run in development:
+## Prepare to run in development:
 
 1. Clone repo: 
 
@@ -62,7 +62,7 @@ To install foreman:
 
 ---
 
-### Run in development
+## Run in development
 
 In a free terminal window, run the example job using the rails runner:
 
@@ -90,7 +90,7 @@ Then you should see:
 
 ---
 
-### Deploy to production (Heroku)
+## Deploy to production (Heroku)
 
 This app is ready to run at Heroku with these steps:
 
@@ -129,7 +129,7 @@ No need to start Sidekiq (or Redis) manually. The Redis Cloud instance we just c
 
 ---
 
-### Run in production (Heroku)
+## Run in production (Heroku)
 
 From local project directory:
 
@@ -174,11 +174,11 @@ __You can also *monitor* Sidekiq via its built-in dashboard:__
 
 ---
 
-### Good things to know now
+## Good things to know now
 
-#### Basics
+### Basics
 
-##### Sidekiq with ActiveJob
+#### Sidekiq with ActiveJob
 
 ActiveJob acts an an interface for external job runners, including Sidekiq. (Since Rails 4.2)
 
@@ -191,11 +191,11 @@ ActiveJob acts an an interface for external job runners, including Sidekiq. (Sin
 
 * Can't configure advanced Sidekiq features in ActiveJob
 
-##### Sidekiq without ActiveJob
+#### Sidekiq without ActiveJob
 
 Running Sidekiq without ActiveJob just entails writing Workers instead of Jobs.
 
-###### Jobs vs Workers
+##### Jobs vs Workers
 
 What's the difference between (ActiveJob) Jobs and (Sidekiq) Workers?
 
@@ -242,9 +242,9 @@ In other words, to get full Sidekiq functionality, just exchange your Jobs for W
 
 ##### Recommendation
 
-Start with Jobs. Then switch to Workers when additional control is needed. Running both Jobs and Workers is OK. Both have full access to rails and so core behavior is written the same. Worst case may be confusion during debugging, for the uninitiated; mostly because of logging differences. (See [Logging](#logging) below.)
+Start with Jobs. Then switch to Workers when additional control is needed. Running both Jobs and Workers is OK. Both have full access to rails and so core behavior is written the same. Worst case may be confusion during debugging for the uninitiated, mostly due to logging differences. (See [Logging](#logging) below.)
 
-##### Other interesting details
+#### Other interesting details
 
 * Sidekiq has two parts:
   - Client: enqueues jobs
@@ -258,9 +258,9 @@ Start with Jobs. Then switch to Workers when additional control is needed. Runni
 
 > -[*Sidekiq Wiki - The Basics*](https://github.com/mperham/sidekiq/wiki/The-Basics#server)
 
-#### Configuration
+### Configuration
 
-Basic configuration happens in the file, config/sidekiq.yml:
+Basic configuration happens in *config/sidekiq.yml*:
 
 
 	:concurrency: 5
@@ -278,7 +278,7 @@ Basic configuration happens in the file, config/sidekiq.yml:
 	   :verbose: false
 
 
-##### Queues
+#### Queues
 
 Queues are processed in the order listed in *config/sidekiq.yml*. Queues can be *weighted* with a number, indicating here, for example, that the *critical* queue will be checked twice as frequently as the other queues (in addition to coming first):
 	
@@ -289,7 +289,7 @@ Queues are processed in the order listed in *config/sidekiq.yml*. Queues can be 
   	 - low
 
 
-##### Concurrency
+#### Concurrency
 
 * We can tune the concurrency of our sidekiq process.
 	
@@ -304,40 +304,39 @@ Queues are processed in the order listed in *config/sidekiq.yml*. Queues can be 
 
 ###### Advanced concurrency:
 
-Sidekiq includes a [connection_pool_gem](https://github.com/mperham/connection_pool), which enables a [connection pooling](https://github.com/mperham/sidekiq/wiki/Advanced-Options#connection-pooling) for redis:
+Sidekiq includes a [connection_pool_gem](https://github.com/mperham/connection_pool), which enables [connection pooling](https://github.com/mperham/sidekiq/wiki/Advanced-Options#connection-pooling) for in-memory data stores:
 
 	
 	MEMCACHED_POOL = ConnectionPool.new(:size => 10, :timeout => 3) { Dalli::Client.new }
 	
 
-##### Logging
+#### Logging
 
-* By default, Sidekiq uses its own logger
-* By default, Sidekiq logger logs to STDOUT, for the process in which it's running
+* Sidekiq uses its own logger
+* By default, Sidekiq logger logs to STDOUT, *for the process in which it's running*
 * Write log messages in workers like: `logger.info "I'm doing stuff."`
-* Workers can also call Rails.logger, like: `Rails.logger.info "I'm doing stuff and letting Rails log know.`
-  - But those lines will appear in STDOUT for the web process, not for the separate worker process where sidekiq might be running, for instance, in production.
+* Workers can also call Rails.logger, like: `Rails.logger.info "I'm doing stuff and letting Rails log know."`
+  - But those lines will appear in STDOUT for the *web process*, not for the separate *worker process* where sidekiq might be running, for instance, in production.
 
 ###### Advanced logging:
 
-* To log to a file rather than STDOUT, specify a log file, either:
-  - on the CLI: `bundle exec sidekiq -L log/sidekiq.log`
+* To log to a *file* rather than STDOUT, specify a *log file*, either:
+  - on the CLI: `bundle exec sidekiq -L log/sidekiq.log` or
   - in config/sidekiq.yml: `:logfile: ./log/sidekiq.log`
-* Sidekiq defaults to using Ruby's standard library Logger, so:
+* Sidekiq defaults to using Ruby's standard library, Logger, so:
   - to turn off logging in test: `require 'sidekiq/testing'; Sidekiq::Logging.logger = nil`
-  - to reduce verboseness in production (for a worker): `Sidekiq::Logging.logger.level = Logger::WARN`
+  - to reduce verboseness in production: `Sidekiq::Logging.logger.level = Logger::WARN`
   - to customize log line format: `Sidekiq.logger.formatter = MyFormatter.new`
   - to use Log4r instead: `Sidekiq::Logging.logger = Log4r::Logger.new 'sidekiq'`
 
-##### Mailers
+#### Mailers
 
-* Configure rails to use Sidekiq for ActionMailer's delayed deliveries
-* Send a mailer using Sidekiq, like: `PersonMailer.delay.welcome_email(@person)`
-* *deliver_later* runs through ActiveJob (like *perform_later*): `PersonMailer.welcome_email(@person).deliver_later`
+* When Sidekiq is configured as ActiveJob's job runner, it handles ActionMailer's delayed deliveries
+* Send a mailer using Sidekiq, like: `WelcomeMailer.deliver_later(@person)`
 
-##### Error handling
+#### Error handling
 
-Best practice is to let Sidekiq catch errors raised by your jobs. (See [Best Practices](file:///Users/jameskessler/Workspace/2018/buckmason/demo-sidekiq-001/README.md#best-practices) below.)
+Best practice is to let Sidekiq catch errors raised by your jobs. (See [Best practices - Error handling](##best-practices) below.)
 
 Sidekiq automatically retries jobs that fail. Default behavior is:
 
@@ -351,11 +350,11 @@ Sidekiq automatically retries jobs that fail. Default behavior is:
 
 ---
 
-### Best practices
+## Best practices
 
 Some key best practices relate to:
 
-#### Passing arguments
+### Passing arguments
 
 Number one, most important:
 
@@ -366,24 +365,32 @@ Number one, most important:
 
 [ActiveJob supports using GlobalIDs for parameters](http://edgeguides.rubyonrails.org/active_job_basics.html#globalid). They're technically feasible, particularly when using ActiveJob. Still, [Mike doesn't like them](https://github.com/mperham/sidekiq/issues/2299). Here's why this might be confusing: GlobalIDs might seem feasible as a primitive datatype because they're displayed as strings, like `gid://app/Person/1`; however, they're actually objects. The recommendation here would be, if you use GlobalIDs, use them as strings, and have your Workers use `GlobalID::Locator.locate` on the flipside to find the objects. But then, why not just use IDs and ActiveRecord finders? [You still run the risk of the underlying database record changing between enqueued and execution](https://github.com/mperham/sidekiq/wiki/Best-Practices#1-make-your-job-parameters-small-and-simple). (One case, maybe: when your object instance comes from a class that's part of a polymorphic association, such that it could be one of two more entities. Basically, [one of the key reasons GlobalID was added to Rails](https://github.com/rails/globalid#global-id---reference-models-by-uri/).)
 
-#### Error handling
+### Error handling
+
+* [Use an error handling service](https://github.com/mperham/sidekiq/wiki/Error-Handling#best-practices) (Airbrake, Rollbar, etc.)
 
 * [Let Sidekiq catch errors raised by your jobs](https://github.com/mperham/sidekiq/wiki/Error-Handling#best-practices).
 
-* [Sidekiq responds to terminal signals](https://github.com/mperham/sidekiq/wiki/Signals). [Use them like this](https://www.youtube.com/watch?v=0Q6CbF-ZmB8&feature=youtu.be).
+> Let Sidekiq catch errors raised by your jobs. Sidekiq's built-in retry mechanism will catch those exceptions and retry the jobs regularly. The error service will notify you of the exception. You fix the bug, deploy the fix and Sidekiq will retry your job successfully.
+
+> -[*Sidekiq Wiki - Error Handling Best Practices*](https://github.com/mperham/sidekiq/wiki/Error-Handling#best-practices)
+
+* [Sidekiq responds to terminal signals](https://github.com/mperham/sidekiq/wiki/Signals). ([Use them like this](https://www.youtube.com/watch?v=0Q6CbF-ZmB8&feature=youtu.be)).
 
 
-#### Idempotency
+### Idempotency
 
-* [Make jobs idempotent and transactional](https://github.com/mperham/sidekiq/wiki/Best-Practices#2-make-your-job-idempotent-and-transactional). Makes sure your job can safely execute multiple times. Use database transactions when appropriate.
+* [Make jobs idempotent and transactional](https://github.com/mperham/sidekiq/wiki/Best-Practices#2-make-your-job-idempotent-and-transactional). Make sure your job can safely execute multiple times. Use database transactions when appropriate.
 
-#### Namespacing
+### Namespacing
 
 * [Don't use namespaces with redis](http://www.mikeperham.com/2015/09/24/storing-data-with-redis/#namespaces).
 
-#### Race conditions
+### Race conditions
 
-* [Avoid race conditions by using database transactions #with_lock](https://www.leighhalliday.com/avoid-race-conditions-with-postgres-locks). With concurrency comes race conditions. Don't get me started on [recursive locking](https://github.com/rails/rails/issues/10039#issuecomment-20033905).
+* [Avoid race conditions by using database transactions #with_lock](https://www.leighhalliday.com/avoid-race-conditions-with-postgres-locks). 
+
+With concurrency comes race conditions. [Recursive locking](https://github.com/rails/rails/issues/10039#issuecomment-20033905) is a lot of fun.
 
 > __Cannot find ModelName with ID=12345__
 
@@ -395,9 +402,9 @@ Number one, most important:
 
 ---
 
-### Next steps
+## Next steps
 
-#### Run a Sidekiq Worker version of our ActiveJob Job
+### Run a Sidekiq Worker version of our ActiveJob Job
 
 Whereas we ran our example job, HardJob, like this:
 
@@ -433,28 +440,28 @@ __The differences?__
 
 3. There are two (2) fewer messages.
 
-	When processing HardJob, Rails::ActiveJob reports two (2) additional log messages:
-	* One when the job runner (Sidekiq) starts the job; 
-	* The other when Sidekiq reports it finished the job.
+	That's because Rails::ActiveJob reports two (2) additional log messages:
+	* One when its job runner starts the job; 
+	* The other when its job runner reports it finished.
 	
 We don't get these with HardWorker because there's no additional layer between us and Sidekiq.
 	
 
-#### Performance tuning
+### Tune performance
 
-After we get our performance lift with Sidekiq, we may still want to tune performance with these steps:
+After we get a performance lift with Sidekiq, we may still want to tune performance with these steps:
 
 1. [Tune timeouts for network connections like API calls](https://github.com/mperham/sidekiq/wiki/Using-Redis#life-in-the-cloud).
 
-	config.redis = { url: 'redis://...', network_timeout: 5 }
+	`config.redis = { url: 'redis://...', network_timeout: 5 }`
 	
 2. [Don't use Redis as a cache; split off a separate instance configured as a persistent store](https://github.com/mperham/sidekiq/wiki/Using-Redis#memory).
 
 3. [We may want to set up connection pooling using the connection_pool gem](https://github.com/mperham/sidekiq/wiki/Advanced-Options#connection-pooling).
 
-#### Upgrades and additional features
+### Upgrade to additional features
 
-These seem likely as the next three upgrades:
+These seem likely as the next few upgrades:
 
 1. Eliminate data loss with [Sidekiq Pro](https://sidekiq.org/products/pro.html) - $950/yr. 
 
@@ -466,11 +473,11 @@ These seem likely as the next three upgrades:
 
 > -[*Sidekiq Pro site*](https://sidekiq.org/products/pro.html)
 
-2. [Add an exception handling service, like Airbrake or Rollbar](https://github.com/mperham/sidekiq/wiki/Error-Handling#best-practices).
+2. [Add an exception handling service, like Airbrake or Rollbar](https://github.com/mperham/sidekiq/wiki/Error-Handling#best-practices). (Sidekiq likes Honeybadger.)
 	
-3. Upgrade monitoring. Sidekiq's built-in dashboard is good but limited; we'll probably want to upgrade to something like [Inspeqtor](http://www.mikeperham.com/2014/10/02/introducing-inspeqtor/), also by Mike Perham.
+3. Upgrade monitoring. Sidekiq's built-in dashboard is good but limited; we'll probably want to [upgrade to something like Inspeqtor](http://www.mikeperham.com/2014/10/02/introducing-inspeqtor/), also by Mike Perham.
 
 
-#### More reading
+### More reading
 
-[This article was helpful](https://medium.com/@et3216/9-ways-to-boost-sidekiq-performance-correctly-in-practical-experiences-bfebe9ee0f28).
+[This article](https://medium.com/@et3216/9-ways-to-boost-sidekiq-performance-correctly-in-practical-experiences-bfebe9ee0f28) was helpful as an overview of best practices.
