@@ -1,0 +1,13 @@
+# Configuration file for Sidekiq.
+:concurrency: 5
+:verbose: true
+
+:queues:
+  - [critical, 2]
+  - default
+  - low
+  
+staging:
+  :concurrency: 10
+production:
+  :concurrency: 25

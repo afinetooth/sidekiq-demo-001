@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   resources :units
   resources :customers
@@ -6,4 +8,7 @@ Rails.application.routes.draw do
   resources :lines
   resources :orders
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  
+  # Sidekiq monitoring URL
+  mount Sidekiq::Web => '/sidekiq'
 end
